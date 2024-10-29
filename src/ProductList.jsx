@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './ProductList.css';
 import CartItem from './CartItem';
 import { addItem } from './CartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-function ProductList() {
+function ProductList({ onGoBackHome }) {
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({}); // State to control the items added to the cart
@@ -255,6 +256,11 @@ function ProductList() {
     setShowCart(false); // Hide the cart when navigating to About Us
   };
 
+  const handleGoBack = (e) => {
+    e.preventDefault();
+    onGoBackHome();
+  };
+
   const handleContinueShopping = () => {
     setShowCart(false);
   };
@@ -278,7 +284,7 @@ function ProductList() {
         <div className="tag">
           <div className="luxury">
             <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
-            <a href="/" style={{ textDecoration: 'none' }}>
+            <a href="#" style={{ textDecoration: 'none' }} onClick={handleGoBack}>
               <div>
                 <h3 style={{ color: 'white' }}>Paradise Nursery</h3>
                 <i style={{ color: 'white' }}>Where Green Meets Serenity</i>
@@ -359,5 +365,9 @@ function ProductList() {
     </div>
   );
 }
+
+ProductList.propTypes = {
+  onGoBackHome: PropTypes.func,
+};
 
 export default ProductList;
