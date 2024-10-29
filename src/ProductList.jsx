@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './ProductList.css';
 import CartItem from './CartItem';
 import { addItem } from './CartSlice';
-import { useDispatch } from 'react-redux';
-import { set } from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
 
 function ProductList() {
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({}); // State to control the items added to the cart
+  const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
   const plantsArray = [
@@ -255,8 +255,7 @@ function ProductList() {
     setShowCart(false); // Hide the cart when navigating to About Us
   };
 
-  const handleContinueShopping = (e) => {
-    e.preventDefault();
+  const handleContinueShopping = () => {
     setShowCart(false);
   };
 
@@ -264,6 +263,14 @@ function ProductList() {
     setAddedToCart({ ...addedToCart, [plant.name]: true }); // Add the selected plant to the cart
     dispatch(addItem(plant));
   };
+
+  const handleRemoveFromCart = (plant) => {
+    const newCart = { ...addedToCart };
+    delete newCart[plant.name];
+    setAddedToCart(newCart);
+  };
+
+  const totalCartItems = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div>
@@ -310,6 +317,7 @@ function ProductList() {
                     id="mainIconPathAttribute"
                   ></path>
                 </svg>
+                <span className="cart_quantity_count">{totalCartItems}</span>
               </h1>
             </a>
           </div>
@@ -325,12 +333,16 @@ function ProductList() {
               <div className="product-list">
                 {category.plants.map((plant, plantIndex) => (
                   <div key={plantIndex} className="product-card">
-                    <img src={plant.image} alt={plant.name} className="product-image" />
                     <p className="product-title">{plant.name}</p>
-                    <p className="product-title">{plant.description}</p>
+                    <img src={plant.image} alt={plant.name} className="product-image" />
                     <p className="product-price">{plant.cost}</p>
-                    <button className="product-button" onClick={() => handleAddToCart(plant)}>
-                      Add to Cart
+                    <p className="product-description">{plant.description}</p>
+                    <button
+                      className={`product-button ${addedToCart[plant.name] ? 'added-to-cart' : ''}`}
+                      disabled={addedToCart[plant.name]}
+                      onClick={() => handleAddToCart(plant)}
+                    >
+                      {addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}
                     </button>
                   </div>
                 ))}
@@ -339,7 +351,10 @@ function ProductList() {
           ))}
         </div>
       ) : (
-        <CartItem onContinueShopping={handleContinueShopping} />
+        <CartItem
+          onContinueShopping={handleContinueShopping}
+          onRemoveFromCart={handleRemoveFromCart}
+        />
       )}
     </div>
   );

@@ -57,7 +57,9 @@ body {
   border-bottom: 2px solid gray;
   border-top: 2px solid gray;
   margin: 0 auto;
-  width: fit-content;
+  text-align: center;
+  width: 25%;
+  max-width: 520px;
 }
 
 .product-list {
@@ -99,6 +101,12 @@ body {
   margin-bottom: 10px;
 }
 
+.product-description {
+  font-weight: normal;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
 .product-price {
   color: #e74c3c;
   font-size: 1.2rem;
@@ -120,10 +128,6 @@ body {
   margin-top: 10px;
 }
 
-.product-button:hover {
-  background-color: #c0392b;
-}
-
 /* Pseudo-elements - Sale badge */
 .product-card::before {
   content: 'SALE';
@@ -135,6 +139,7 @@ body {
   padding: 5px 10px;
   border-radius: 0 0 0 5px;
 }
+
 .tag_home_link {
   display: flex;
   /* background-color: red; */
@@ -146,12 +151,15 @@ body {
   text-decoration: none;
   font-size: 20px;
 }
+
 .tag_home_link h3 {
   font-size: 30px;
 }
+
 .tag a {
   text-decoration: none;
 }
+
 .tag {
   width: 400px;
   display: flex;
@@ -172,10 +180,12 @@ body {
   width: 650px;
   font-size: 19px;
 }
+
 .cart {
   color: white;
   display: flex;
 }
+
 .cart_quantity_count {
   margin-top: 16px;
   /* background-color: red; */
@@ -183,12 +193,14 @@ body {
   position: absolute;
   font-size: 29px;
 }
+
 .plantname_heading {
   display: flex;
   align-items: center;
   justify-content: center;
   /* background-color: yellow; */
 }
+
 .plant_heading {
   width: 400px;
   text-align: center;
@@ -197,6 +209,7 @@ body {
   border-left: none;
   border-right: none;
 }
+
 /* Add Media Query for responsiveness */
 @media (max-width: 768px) {
   .product-card {
@@ -206,8 +219,8 @@ body {
     ); /* Adjust max-width for 2 cards per row with 20px gap on smaller screens */
   }
 }
-/* ProductList.css */
 
+/* ProductList.css */
 .product-button {
   background-color: #4caf50; /* Green */
   border: none;
@@ -229,6 +242,7 @@ body {
 .product-button.added-to-cart {
   background-color: grey; /* Grey when product is added */
 }
+
 @media (max-width: 1200px) {
   .product-card {
     flex: 1 1 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap on medium screens */
